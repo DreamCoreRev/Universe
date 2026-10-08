@@ -1,0 +1,84 @@
+local SPEED = 120
+
+local STANDING = {
+	n  = hash("north"),
+	s  = hash("south"),
+	e  = hash("east"),
+	w  = hash("west"),
+	ne = hash("northeast"),
+	nw = hash("northwest"),
+	se = hash("southeast"),
+	sw = hash("southwest"),
+}
+
+local WALKING = {
+	n  = hash("walk_n"),
+	s  = hash("walk_s"),
+	e  = hash("walk_e"),
+	w  = hash("walk_w"),
+	ne = hash("walk_ne"),
+	nw = hash("walk_nw"),
+	se = hash("walk_se"),
+	sw = hash("walk_sw"),
+}
+
+local function pick_direction(dx, dy)
+	if dx > 0 and dy > 0 then return "ne" end
+	if dx < 0 and dy > 0 then return "nw" end
+	if dx > 0 and dy < 0 then return "se" end
+	if dx < 0 and dy < 0 then return "sw" end
+	if dx > 0 then return "e" end
+	if dx < 0 then return "w" end
+	if dy > 0 then return "n" end
+	if dy < 0 then return "s" end
+	return nil
+end
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	self.input = { up = false, down = false, left = false, right = false }
+	self.facing = "s"
+	self.current_anim = STANDING.s
+	sprite.play_flipbook("#sprite", self.current_anim)
+end
+
+function final(self)
+	msg.post(".", "release_input_focus")
+end
+
+function on_input(self, action_id, action)
+	if action_id == hash("up") then
+		if action.pressed then self.input.up = true end
+		if action.released then self.input.up = false end
+	elseif action_id == hash("down") then
+		if action.pressed then self.input.down = true end
+		if action.released then self.input.down = false end
+	elseif action_id == hash("left") then
+		if action.pressed then self.input.left = true end
+		if action.released then self.input.left = false end
+	elseif action_id == hash("right") then
+		if action.pressed then self.input.right = true end
+		if action.released then self.input.right = false end
+	end
+end
+
+function update(self, dt)
+	local dx = (self.input.right and 1 or 0) - (self.input.left and 1 or 0)
+	local dy = (self.input.up and 1 or 0) - (self.input.down and 1 or 0)
+	local moving = (dx ~= 0 or dy ~= 0)
+
+	if moving then
+		local len = math.sqrt(dx * dx + dy * dy)
+		local pos = go.get_position()
+		pos.x = pos.x + (dx / len) * SPEED * dt
+		pos.y = pos.y + (dy / len) * SPEED * dt
+		go.set_position(pos)
+		self.facing = pick_direction(dx, dy)
+	end
+
+	local target = moving and WALKING[self.facing] or STANDING[self.facing]
+	if target ~= self.current_anim then
+		sprite.play_flipbook("#sprite", target)
+		self.current_anim = target
+	end
+end

@@ -1,0 +1,283 @@
+images {
+  image: "/main/images/floorFull_SW.png"
+}
+images {
+  image: "/main/images/chair_SW.png"
+}
+images {
+  image: "/main/images/south.png"
+}
+images {
+  image: "/main/images/north.png"
+}
+images {
+  image: "/main/images/east.png"
+}
+images {
+  image: "/main/images/west.png"
+}
+images {
+  image: "/main/images/northeast.png"
+}
+images {
+  image: "/main/images/northwest.png"
+}
+images {
+  image: "/main/images/southeast.png"
+}
+images {
+  image: "/main/images/southwest.png"
+}
+animations {
+  id: "walk_n"
+  images {
+    image: "/main/images/walk/n_p1.png"
+  }
+  images {
+    image: "/main/images/walk/n_p2.png"
+  }
+  images {
+    image: "/main/images/walk/n_p3.png"
+  }
+  images {
+    image: "/main/images/walk/n_p4.png"
+  }
+  images {
+    image: "/main/images/walk/n_p5.png"
+  }
+  images {
+    image: "/main/images/walk/n_p6.png"
+  }
+  images {
+    image: "/main/images/walk/n_p7.png"
+  }
+  images {
+    image: "/main/images/walk/n_p8.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 10
+  flip_horizontal: 0
+  flip_vertical: 0
+}
+animations {
+  id: "walk_s"
+  images {
+    image: "/main/images/walk/s_p1.png"
+  }
+  images {
+    image: "/main/images/walk/s_p2.png"
+  }
+  images {
+    image: "/main/images/walk/s_p3.png"
+  }
+  images {
+    image: "/main/images/walk/s_p4.png"
+  }
+  images {
+    image: "/main/images/walk/s_p5.png"
+  }
+  images {
+    image: "/main/images/walk/s_p6.png"
+  }
+  images {
+    image: "/main/images/walk/s_p7.png"
+  }
+  images {
+    image: "/main/images/walk/s_p8.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 10
+  flip_horizontal: 0
+  flip_vertical: 0
+}
+animations {
+  id: "walk_e"
+  images {
+    image: "/main/images/walk/e_p1.png"
+  }
+  images {
+    image: "/main/images/walk/e_p2.png"
+  }
+  images {
+    image: "/main/images/walk/e_p3.png"
+  }
+  images {
+    image: "/main/images/walk/e_p4.png"
+  }
+  images {
+    image: "/main/images/walk/e_p5.png"
+  }
+  images {
+    image: "/main/images/walk/e_p6.png"
+  }
+  images {
+    image: "/main/images/walk/e_p7.png"
+  }
+  images {
+    image: "/main/images/walk/e_p8.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 10
+  flip_horizontal: 0
+  flip_vertical: 0
+}
+animations {
+  id: "walk_w"
+  images {
+    image: "/main/images/walk/w_p1.png"
+  }
+  images {
+    image: "/main/images/walk/w_p2.png"
+  }
+  images {
+    image: "/main/images/walk/w_p3.png"
+  }
+  images {
+    image: "/main/images/walk/w_p4.png"
+  }
+  images {
+    image: "/main/images/walk/w_p5.png"
+  }
+  images {
+    image: "/main/images/walk/w_p6.png"
+  }
+  images {
+    image: "/main/images/walk/w_p7.png"
+  }
+  images {
+    image: "/main/images/walk/w_p8.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 10
+  flip_horizontal: 0
+  flip_vertical: 0
+}
+animations {
+  id: "walk_ne"
+  images {
+    image: "/main/images/walk/ne_p1.png"
+  }
+  images {
+    image: "/main/images/walk/ne_p2.png"
+  }
+  images {
+    image: "/main/images/walk/ne_p3.png"
+  }
+  images {
+    image: "/main/images/walk/ne_p4.png"
+  }
+  images {
+    image: "/main/images/walk/ne_p5.png"
+  }
+  images {
+    image: "/main/images/walk/ne_p6.png"
+  }
+  images {
+    image: "/main/images/walk/ne_p7.png"
+  }
+  images {
+    image: "/main/images/walk/ne_p8.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 10
+  flip_horizontal: 0
+  flip_vertical: 0
+}
+animations {
+  id: "walk_nw"
+  images {
+    image: "/main/images/walk/nw_p1.png"
+  }
+  images {
+    image: "/main/images/walk/nw_p2.png"
+  }
+  images {
+    image: "/main/images/walk/nw_p3.png"
+  }
+  images {
+    image: "/main/images/walk/nw_p4.png"
+  }
+  images {
+    image: "/main/images/walk/nw_p5.png"
+  }
+  images {
+    image: "/main/images/walk/nw_p6.png"
+  }
+  images {
+    image: "/main/images/walk/nw_p7.png"
+  }
+  images {
+    image: "/main/images/walk/nw_p8.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 10
+  flip_horizontal: 0
+  flip_vertical: 0
+}
+animations {
+  id: "walk_se"
+  images {
+    image: "/main/images/walk/se_p1.png"
+  }
+  images {
+    image: "/main/images/walk/se_p2.png"
+  }
+  images {
+    image: "/main/images/walk/se_p3.png"
+  }
+  images {
+    image: "/main/images/walk/se_p4.png"
+  }
+  images {
+    image: "/main/images/walk/se_p5.png"
+  }
+  images {
+    image: "/main/images/walk/se_p6.png"
+  }
+  images {
+    image: "/main/images/walk/se_p7.png"
+  }
+  images {
+    image: "/main/images/walk/se_p8.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 10
+  flip_horizontal: 0
+  flip_vertical: 0
+}
+animations {
+  id: "walk_sw"
+  images {
+    image: "/main/images/walk/sw_p1.png"
+  }
+  images {
+    image: "/main/images/walk/sw_p2.png"
+  }
+  images {
+    image: "/main/images/walk/sw_p3.png"
+  }
+  images {
+    image: "/main/images/walk/sw_p4.png"
+  }
+  images {
+    image: "/main/images/walk/sw_p5.png"
+  }
+  images {
+    image: "/main/images/walk/sw_p6.png"
+  }
+  images {
+    image: "/main/images/walk/sw_p7.png"
+  }
+  images {
+    image: "/main/images/walk/sw_p8.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 10
+  flip_horizontal: 0
+  flip_vertical: 0
+}
+margin: 2
+extrude_borders: 2
+inner_padding: 0
+max_page_width: 0
+max_page_height: 0
