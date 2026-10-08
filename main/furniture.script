@@ -1,0 +1,13 @@
+-- Attached to every piece of furniture spawned from the catalog
+-- (see furniture.go). Right after factory.create() the placement
+-- controller sends "set_item" once to pick the correct sprite frame.
+
+function init(self)
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("set_item") then
+		self.item_id = message.item_id
+		sprite.play_flipbook("#sprite", hash(message.anim))
+	end
+end

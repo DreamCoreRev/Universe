@@ -1,0 +1,80 @@
+-- Spawns furniture from the catalog, keeps track of what's been placed
+-- (the "placed" list is also what the upcoming save/load step will write
+-- to disk), and lets the player pick an already-placed item back up and
+-- drag it to a new spot.
+--
+-- Tap priority: tapping ON an existing piece of furniture always grabs it
+-- for dragging, even if a catalog item is armed. Tapping empty floor while
+-- an item is armed places a new copy there. Tapping empty floor with
+-- nothing armed does nothing.
+
+local ITEMS = {
+	{ id = "chair",    anim = "chair_SW" },
+	{ id = "table",    anim = "table_SW" },
+	{ id = "sofa",     anim = "loungeSofa_SW" },
+	{ id = "bed",      anim = "bedSingle_SW" },
+	{ id = "lamp",     anim = "lampRoundFloor_SW" },
+	{ id = "plant",    anim = "pottedPlant_SW" },
+	{ id = "tv",       anim = "televisionModern_SW" },
+	{ id = "bookcase", anim = "bookcaseOpen_SW" },
+}
+
+local PICK_RADIUS = 50
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	self.armed = nil    -- index into ITEMS, nil = nothing selected in the catalog
+	self.placed = {}    -- { {id=, anim=, url=, x=, y=}, ... }
+	self.dragging = nil -- index into self.placed currently being dragged
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("arm_item") then
+		self.armed = message.index
+	end
+end
+
+local function find_at(self, x, y)
+	local best, best_dist = nil, PICK_RADIUS
+	for i, p in ipairs(self.placed) do
+		local d = vmath.length(vmath.vector3(p.x - x, p.y - y, 0))
+		if d <= best_dist then
+			best, best_dist = i, d
+		end
+	end
+	return best
+end
+
+function on_input(self, action_id, action)
+	if action_id ~= hash("touch") then
+		return false
+	end
+
+	if action.pressed then
+		local hit = find_at(self, action.x, action.y)
+		if hit then
+			self.dragging = hit
+			return true
+		elseif self.armed then
+			local item = ITEMS[self.armed]
+			local pos = vmath.vector3(action.x, action.y, 0.15)
+			local url = factory.create("#factory", pos)
+			msg.post(url, "set_item", { item_id = item.id, anim = item.anim })
+			table.insert(self.placed, { id = item.id, anim = item.anim, url = url, x = action.x, y = action.y })
+			return true
+		end
+		return false
+	end
+
+	if self.dragging then
+		local p = self.placed[self.dragging]
+		p.x, p.y = action.x, action.y
+		go.set_position(vmath.vector3(action.x, action.y, 0.15), p.url)
+		if action.released then
+			self.dragging = nil
+		end
+		return true
+	end
+
+	return false
+end

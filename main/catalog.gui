@@ -1,0 +1,231 @@
+fonts {
+  name: "default"
+  font: "/builtins/fonts/default.font"
+}
+nodes {
+  position {
+    x: 70.0
+    y: 610.0
+  }
+  size {
+    x: 100.0
+    y: 36.0
+  }
+  type: TYPE_TEXT
+  text: "Chaise"
+  font: "default"
+  id: "cat_1"
+  pivot: PIVOT_CENTER
+  inherit_alpha: true
+  outline {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  shadow {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+nodes {
+  position {
+    x: 185.0
+    y: 610.0
+  }
+  size {
+    x: 100.0
+    y: 36.0
+  }
+  type: TYPE_TEXT
+  text: "Table"
+  font: "default"
+  id: "cat_2"
+  pivot: PIVOT_CENTER
+  inherit_alpha: true
+  outline {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  shadow {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+nodes {
+  position {
+    x: 300.0
+    y: 610.0
+  }
+  size {
+    x: 100.0
+    y: 36.0
+  }
+  type: TYPE_TEXT
+  text: "Canape"
+  font: "default"
+  id: "cat_3"
+  pivot: PIVOT_CENTER
+  inherit_alpha: true
+  outline {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  shadow {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+nodes {
+  position {
+    x: 415.0
+    y: 610.0
+  }
+  size {
+    x: 100.0
+    y: 36.0
+  }
+  type: TYPE_TEXT
+  text: "Lit"
+  font: "default"
+  id: "cat_4"
+  pivot: PIVOT_CENTER
+  inherit_alpha: true
+  outline {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  shadow {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+nodes {
+  position {
+    x: 530.0
+    y: 610.0
+  }
+  size {
+    x: 100.0
+    y: 36.0
+  }
+  type: TYPE_TEXT
+  text: "Lampe"
+  font: "default"
+  id: "cat_5"
+  pivot: PIVOT_CENTER
+  inherit_alpha: true
+  outline {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  shadow {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+nodes {
+  position {
+    x: 645.0
+    y: 610.0
+  }
+  size {
+    x: 100.0
+    y: 36.0
+  }
+  type: TYPE_TEXT
+  text: "Plante"
+  font: "default"
+  id: "cat_6"
+  pivot: PIVOT_CENTER
+  inherit_alpha: true
+  outline {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  shadow {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+nodes {
+  position {
+    x: 760.0
+    y: 610.0
+  }
+  size {
+    x: 100.0
+    y: 36.0
+  }
+  type: TYPE_TEXT
+  text: "TV"
+  font: "default"
+  id: "cat_7"
+  pivot: PIVOT_CENTER
+  inherit_alpha: true
+  outline {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  shadow {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+nodes {
+  position {
+    x: 875.0
+    y: 610.0
+  }
+  size {
+    x: 100.0
+    y: 36.0
+  }
+  type: TYPE_TEXT
+  text: "Biblio"
+  font: "default"
+  id: "cat_8"
+  pivot: PIVOT_CENTER
+  inherit_alpha: true
+  outline {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  shadow {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT
+script: "/main/catalog.gui_script"

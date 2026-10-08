@@ -578,3 +578,32 @@ embedded_instances {
     y: 0.0
   }
 }
+embedded_instances {
+  id: "controller"
+  data: "components {\n"
+  "  id: \"controller\"\n"
+  "  component: \"/main/placement_controller.script\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"factory\"\n"
+  "  type: \"factory\"\n"
+  "  data: \"prototype: \\\"/main/furniture.go\\\"\\n\"\n"
+  "}\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
+  }
+}
+embedded_instances {
+  id: "catalog"
+  data: "components {\n"
+  "  id: \"catalog\"\n"
+  "  component: \"/main/catalog.gui\"\n"
+  "}\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
+  }
+}
