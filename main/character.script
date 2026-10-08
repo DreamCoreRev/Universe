@@ -40,6 +40,14 @@ function init(self)
 	self.facing = "s"
 	self.current_anim = STANDING.s
 	sprite.play_flipbook("#sprite", self.current_anim)
+	-- accumulated push-back correction applied this frame by the physics
+	-- engine when the kinematic collision shape overlaps a static one
+	-- (floor/wall/furniture). Reset every frame in update().
+	self.correction = vmath.vector3()
+	-- direction reported by the on-screen virtual joystick (touch_controls.gui),
+	-- each in the range -1..1. Zero when nothing is being dragged.
+	self.touch_dx = 0
+	self.touch_dy = 0
 end
 
 function final(self)
@@ -62,9 +70,33 @@ function on_input(self, action_id, action)
 	end
 end
 
+function on_message(self, message_id, message, sender)
+	if message_id == hash("contact_point_response") then
+		-- Standard Defold kinematic-vs-static collision resolution: for every
+		-- contact point reported this frame, push the character back out of
+		-- the obstacle along the contact normal, without double-correcting
+		-- for contacts already resolved this frame.
+		if message.distance > 0 then
+			local proj = vmath.project(self.correction, message.normal * message.distance)
+			local comp = (message.distance - proj) * message.normal
+			go.set_position(go.get_position() + comp)
+			self.correction = self.correction + comp
+		end
+	elseif message_id == hash("touch_move") then
+		-- sent every frame the virtual joystick (touch_controls.gui_script)
+		-- is being dragged; (0, 0) when released
+		self.touch_dx = message.dx
+		self.touch_dy = message.dy
+	end
+end
+
 function update(self, dt)
-	local dx = (self.input.right and 1 or 0) - (self.input.left and 1 or 0)
-	local dy = (self.input.up and 1 or 0) - (self.input.down and 1 or 0)
+	-- clear the correction accumulator at the start of each frame; it is
+	-- filled in by on_message as the physics engine reports contacts
+	self.correction = vmath.vector3()
+
+	local dx = (self.input.right and 1 or 0) - (self.input.left and 1 or 0) + self.touch_dx
+	local dy = (self.input.up and 1 or 0) - (self.input.down and 1 or 0) + self.touch_dy
 	local moving = (dx ~= 0 or dy ~= 0)
 
 	if moving then

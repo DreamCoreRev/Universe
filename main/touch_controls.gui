@@ -1,0 +1,33 @@
+nodes {
+  position {
+    x: 140.0
+    y: 140.0
+  }
+  size {
+    x: 160.0
+    y: 160.0
+  }
+  type: TYPE_BOX
+  id: "joystick_bg"
+  inherit_alpha: true
+  alpha: 0.3
+  size_mode: SIZE_MODE_MANUAL
+}
+nodes {
+  position {
+    x: 140.0
+    y: 140.0
+  }
+  size {
+    x: 70.0
+    y: 70.0
+  }
+  type: TYPE_BOX
+  id: "joystick_nub"
+  inherit_alpha: true
+  alpha: 0.6
+  size_mode: SIZE_MODE_MANUAL
+}
+script: "/main/touch_controls.gui_script"
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

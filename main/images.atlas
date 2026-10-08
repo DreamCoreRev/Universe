@@ -28,6 +28,21 @@ images {
 images {
   image: "/main/images/southwest.png"
 }
+images {
+  image: "/main/images/wall_SW.png"
+}
+images {
+  image: "/main/images/wall_SE.png"
+}
+images {
+  image: "/main/images/wallCorner_SW.png"
+}
+images {
+  image: "/main/images/wallWindow_SW.png"
+}
+images {
+  image: "/main/images/wallDoorway_SW.png"
+}
 animations {
   id: "walk_n"
   images {
