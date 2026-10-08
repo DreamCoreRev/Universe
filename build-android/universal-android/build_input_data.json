@@ -1,0 +1,13 @@
+{
+  "project_git" : {
+    "sha1" : "d6b8b83713d853b299d951aa652fe8eb7310e9dd",
+    "origin" : "https://github.com/DreamCoreRev/Universe.git",
+    "branch" : "main"
+  },
+  "bob_arguments" : {
+    "sha1" : "8620195789abcf164992cc82103a16189d22f675",
+    "version" : "1.13.2",
+    "timestamp" : "2026-10-04 07:50:26"
+  },
+  "defold_sdk" : "8620195789abcf164992cc82103a16189d22f675"
+}
