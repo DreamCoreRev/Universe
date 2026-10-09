@@ -1,39 +1,130 @@
--- Catalog bar across the top of the screen: tap a label to "arm" that
--- furniture item, then tap the floor to place it (handled by
--- placement_controller.script on the /controller game object).
+-- "Catalogue" button bottom-right opens/closes a popup panel. The panel has
+-- 4 category tabs (Sieges / Tables / Deco / Chambre); only the items of the
+-- active category are shown in the grid. Tapping an item arms it (see
+-- placement_controller.script on /controller) and closes the panel so you
+-- can go place it right away.
 
-local ITEM_IDS = { "cat_1", "cat_2", "cat_3", "cat_4", "cat_5", "cat_6", "cat_7", "cat_8" }
+local TAB_KEYS = { "sieges", "tables", "deco", "chambre" }
 
-local NORMAL_COLOR = vmath.vector4(1, 1, 1, 1)
-local SELECTED_COLOR = vmath.vector4(1, 0.85, 0.2, 1)
+-- node id -> category, in the same order as placement_controller.script's
+-- ITEMS table (cat_1 = chair, cat_2 = table, ... cat_8 = bookcase)
+local ITEM_DATA = {
+	{ id = "cat_1", cat = "sieges" },
+	{ id = "cat_2", cat = "tables" },
+	{ id = "cat_3", cat = "sieges" },
+	{ id = "cat_4", cat = "chambre" },
+	{ id = "cat_5", cat = "deco" },
+	{ id = "cat_6", cat = "deco" },
+	{ id = "cat_7", cat = "chambre" },
+	{ id = "cat_8", cat = "deco" },
+}
+
+local PANEL_CHROME_IDS = { "panel_bg", "panel_title", "close_bg", "close" }
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
-	self.nodes = {}
-	for i, node_id in ipairs(ITEM_IDS) do
-		self.nodes[i] = gui.get_node(node_id)
+	self.toggle = gui.get_node("toggle")
+	self.toggle_bg = gui.get_node("toggle_bg")
+	self.close = gui.get_node("close")
+
+	self.panel_chrome = {}
+	for _, node_id in ipairs(PANEL_CHROME_IDS) do
+		table.insert(self.panel_chrome, gui.get_node(node_id))
 	end
-	self.selected = nil
+
+	self.tabs = {}
+	for _, key in ipairs(TAB_KEYS) do
+		table.insert(self.tabs, {
+			key = key,
+			bg = gui.get_node("tab_" .. key .. "_bg"),
+			label = gui.get_node("tab_" .. key),
+		})
+	end
+
+	self.items = {}
+	for _, d in ipairs(ITEM_DATA) do
+		table.insert(self.items, {
+			id = d.id,
+			cat = d.cat,
+			index = tonumber(d.id:match("%d+")),
+			bg = gui.get_node(d.id .. "_bg"),
+			label = gui.get_node(d.id),
+		})
+	end
+
+	self.open = false
+	self.active_cat = TAB_KEYS[1]
 end
 
-local function select(self, index)
-	if self.selected then
-		gui.set_color(self.nodes[self.selected], NORMAL_COLOR)
+local function update_tabs(self)
+	for _, tab in ipairs(self.tabs) do
+		gui.set_enabled(tab.bg, self.open)
+		gui.set_enabled(tab.label, self.open)
+		gui.set_alpha(tab.bg, tab.key == self.active_cat and 1.0 or 0.45)
 	end
-	self.selected = index
-	gui.set_color(self.nodes[index], SELECTED_COLOR)
-	msg.post("/controller#controller", "arm_item", { index = index })
+end
+
+local function update_items(self)
+	for _, item in ipairs(self.items) do
+		local visible = self.open and item.cat == self.active_cat
+		gui.set_enabled(item.bg, visible)
+		gui.set_enabled(item.label, visible)
+	end
+end
+
+local function set_panel_open(self, open)
+	self.open = open
+	for _, node in ipairs(self.panel_chrome) do
+		gui.set_enabled(node, open)
+	end
+	update_tabs(self)
+	update_items(self)
+	msg.post("/controller#controller", "catalog_open", { open = open })
+end
+
+local function set_active_category(self, key)
+	self.active_cat = key
+	update_tabs(self)
+	update_items(self)
 end
 
 function on_input(self, action_id, action)
 	if action_id ~= hash("touch") or not action.pressed then
 		return false
 	end
-	for i, node in ipairs(self.nodes) do
-		if gui.pick_node(node, action.x, action.y) then
-			select(self, i)
+
+	if gui.pick_node(self.toggle_bg, action.x, action.y) or gui.pick_node(self.toggle, action.x, action.y) then
+		set_panel_open(self, not self.open)
+		return true
+	end
+
+	if not self.open then
+		return false
+	end
+
+	if gui.pick_node(self.close, action.x, action.y) then
+		set_panel_open(self, false)
+		return true
+	end
+
+	for _, tab in ipairs(self.tabs) do
+		if gui.pick_node(tab.bg, action.x, action.y) or gui.pick_node(tab.label, action.x, action.y) then
+			set_active_category(self, tab.key)
 			return true
 		end
 	end
-	return false
+
+	for _, item in ipairs(self.items) do
+		if item.cat == self.active_cat then
+			if gui.pick_node(item.bg, action.x, action.y) or gui.pick_node(item.label, action.x, action.y) then
+				msg.post("/controller#controller", "arm_item", { index = item.index })
+				set_panel_open(self, false)
+				return true
+			end
+		end
+	end
+
+	-- swallow any other tap that lands on the open panel so it doesn't
+	-- fall through to placing/dragging furniture underneath it
+	return true
 end

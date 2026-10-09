@@ -21,20 +21,24 @@ local ITEMS = {
 
 local PICK_RADIUS = 50
 
--- the catalog bar's text labels sit around y=610 (screen height is 640);
--- anything up there belongs to the GUI, never to placing/dragging furniture
-local CATALOG_ZONE_Y = 580
+-- the "Catalogue" toggle button sits bottom-right; ignore taps there even
+-- if a stray touch event reaches us before/without the GUI consuming it
+local TOGGLE_ZONE_X = 800.0
+local TOGGLE_ZONE_Y = 90.0
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
-	self.armed = nil    -- index into ITEMS, nil = nothing selected in the catalog
-	self.placed = {}    -- { {id=, anim=, url=, x=, y=}, ... }
-	self.dragging = nil -- index into self.placed currently being dragged
+	self.armed = nil        -- index into ITEMS, nil = nothing selected in the catalog
+	self.placed = {}        -- { {id=, anim=, url=, x=, y=}, ... }
+	self.dragging = nil     -- index into self.placed currently being dragged
+	self.catalog_open = false
 end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("arm_item") then
 		self.armed = message.index
+	elseif message_id == hash("catalog_open") then
+		self.catalog_open = message.open
 	end
 end
 
@@ -54,7 +58,11 @@ function on_input(self, action_id, action)
 		return false
 	end
 
-	if action.y >= CATALOG_ZONE_Y and not self.dragging then
+	if self.catalog_open and not self.dragging then
+		return false
+	end
+
+	if action.x >= TOGGLE_ZONE_X and action.y <= TOGGLE_ZONE_Y and not self.dragging then
 		return false
 	end
 

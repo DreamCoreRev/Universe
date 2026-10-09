@@ -160,7 +160,7 @@ nodes {
   id: "tab_sieges_bg"
   inherit_alpha: true
   alpha: 0.8
-  size_mode: SIZE_MODE_MANUAL
+  size_mode: SIZE_MODU_MANUAL
   enabled: false
   color {
     x: 0.55
@@ -310,7 +310,7 @@ nodes {
   id: "tab_chambre_bg"
   inherit_alpha: true
   alpha: 0.8
-  size_mode: SIZE_MODE_MANUAL
+  size_mode: SIZE_MODU_MANUAL
   enabled: false
   color {
     x: 0.25
@@ -360,7 +360,7 @@ nodes {
   id: "cat_1_bg"
   inherit_alpha: true
   alpha: 0.75
-  size_mode: SIZE_MODE_MANUAL
+  size_mode: SIZE_MODU_MANUAL
   enabled: false
   color {
     x: 0.55
@@ -410,7 +410,7 @@ nodes {
   id: "cat_2_bg"
   inherit_alpha: true
   alpha: 0.75
-  size_mode: SIZE_MODE_MANUAL
+  size_mode: SIZE_MODU_MANUAL
   enabled: false
   color {
     x: 0.2
@@ -460,7 +460,7 @@ nodes {
   id: "cat_3_bg"
   inherit_alpha: true
   alpha: 0.75
-  size_mode: SIZE_MODE_MANUAL
+  size_mode: SIZE_MODU_MANUAL
   enabled: false
   color {
     x: 0.55
@@ -560,7 +560,7 @@ nodes {
   id: "cat_5_bg"
   inherit_alpha: true
   alpha: 0.75
-  size_mode: SIZE_MODE_MANUAL
+  size_mode: SIZE_MODU_MANUAL
   enabled: false
   color {
     x: 0.45
@@ -610,7 +610,7 @@ nodes {
   id: "cat_6_bg"
   inherit_alpha: true
   alpha: 0.75
-  size_mode: SIZE_MODE_MANUAL
+  size_mode: SIZE_MODU_MANUAL
   enabled: false
   color {
     x: 0.45
@@ -660,7 +660,7 @@ nodes {
   id: "cat_7_bg"
   inherit_alpha: true
   alpha: 0.75
-  size_mode: SIZE_MODE_MANUAL
+  size_mode: SIZE_MODU_MANUAL
   enabled: false
   color {
     x: 0.25
@@ -710,7 +710,7 @@ nodes {
   id: "cat_8_bg"
   inherit_alpha: true
   alpha: 0.75
-  size_mode: SIZE_MODE_MANUAL
+  size_mode: SIZE_MODU_MANUAL
   enabled: false
   color {
     x: 0.45
@@ -746,7 +746,7 @@ nodes {
     z: 0.0
     w: 1.0
   }
-}
+
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT
 script: "/main/catalog.gui_script"
