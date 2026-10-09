@@ -1,0 +1,65 @@
+-- Switches between whole pre-made room layouts ("apartments"), picked from
+-- the Appartements catalog (apartments.gui / apartments.gui_script).
+-- Each preset is just a list of the floor/wall game object ids that make
+-- it up; switching a preset on/off is a simple go.set_enabled sweep, no
+-- spawning involved. Both presets are built around the same room center
+-- so swapping between them doesn't shift the character or the camera.
+
+local LOFT_IDS = {
+	"/floor", "/floor_n1n1", "/floor_n10", "/floor_n11", "/floor_0n1", "/floor_01",
+	"/floor_1n1", "/floor_10", "/floor_11",
+	"/floor_n20", "/floor_n21", "/floor_n22", "/floor_n12", "/floor_0n2", "/floor_02",
+	"/floor_1n2", "/floor_12", "/floor_2n2", "/floor_2n1", "/floor_20", "/floor_21",
+	"/floor_22", "/floor_n2n1", "/floor_n2n2", "/floor_n1n2",
+	"/wall_1", "/wall_2", "/wall_3",
+}
+
+local STUDIO_IDS = {
+	"/studio_floor", "/studio_floor_n1n1", "/studio_floor_n10", "/studio_floor_n11",
+	"/studio_floor_0n1", "/studio_floor_01", "/studio_floor_1n1", "/studio_floor_10",
+	"/studio_floor_11",
+	"/studio_wall_1", "/studio_wall_2", "/studio_wall_3",
+}
+
+local PRESETS = {
+	{ key = "loft", ids = LOFT_IDS },
+	{ key = "studio", ids = STUDIO_IDS },
+}
+
+local ROOM_CENTER = vmath.vector3(480, 300, 0)
+
+-- game objects don't have a go.set_enabled() call in Defold; the way to
+-- turn one on/off (sprite, collision, everything) is to post it the
+-- built-in "enable"/"disable" message
+local function set_enabled(url, enabled)
+	if enabled then
+		msg.post(url, "enable")
+	else
+		msg.post(url, "disable")
+	end
+end
+
+local function apply(self, active_key)
+	for _, preset in ipairs(PRESETS) do
+		local show = preset.key == active_key
+		for _, id in ipairs(preset.ids) do
+			set_enabled(id, show)
+		end
+	end
+	self.active = active_key
+end
+
+function init(self)
+	apply(self, "loft")
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("set_room") then
+		if message.key == self.active then
+			return
+		end
+		apply(self, message.key)
+		go.set_position(ROOM_CENTER, "/character")
+		msg.post("/controller#controller", "clear_furniture")
+	end
+end

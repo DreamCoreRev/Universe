@@ -1,0 +1,252 @@
+fonts {
+  name: "default"
+  font: "/builtins/fonts/default.font"
+}
+nodes {
+  position {
+    x: 880.0
+    y: 100.0
+  }
+  size {
+    x: 160.0
+    y: 50.0
+  }
+  type: TYPE_BOX
+  id: "toggle_bg"
+  inherit_alpha: true
+  alpha: 0.6
+  size_mode: SIZE_MODE_MANUAL
+  enabled: true
+}
+nodes {
+  position {
+    x: 880.0
+    y: 100.0
+  }
+  size {
+    x: 160.0
+    y: 40.0
+  }
+  type: TYPE_TEXT
+  text: "Appartements"
+  font: "default"
+  id: "toggle"
+  pivot: PIVOT_CENTER
+  inherit_alpha: true
+  enabled: true
+  outline {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  shadow {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+nodes {
+  position {
+    x: 480.0
+    y: 320.0
+  }
+  size {
+    x: 420.0
+    y: 220.0
+  }
+  type: TYPE_BOX
+  id: "panel_bg"
+  inherit_alpha: true
+  alpha: 0.9
+  size_mode: SIZE_MODE_MANUAL
+  enabled: false
+  color {
+    x: 0.08
+    y: 0.09
+    z: 0.14
+  }
+}
+nodes {
+  position {
+    x: 480.0
+    y: 395.0
+  }
+  size {
+    x: 320.0
+    y: 40.0
+  }
+  type: TYPE_TEXT
+  text: "Appartements"
+  font: "default"
+  id: "panel_title"
+  pivot: PIVOT_CENTER
+  inherit_alpha: true
+  enabled: false
+  outline {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  shadow {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+nodes {
+  position {
+    x: 650.0
+    y: 395.0
+  }
+  size {
+    x: 60.0
+    y: 36.0
+  }
+  type: TYPE_BOX
+  id: "close_bg"
+  inherit_alpha: true
+  alpha: 0.7
+  size_mode: SIZE_MODE_MANUAL
+  enabled: false
+  color {
+    x: 0.6
+    y: 0.2
+    z: 0.2
+  }
+}
+nodes {
+  position {
+    x: 650.0
+    y: 395.0
+  }
+  size {
+    x: 60.0
+    y: 30.0
+  }
+  type: TYPE_TEXT
+  text: "Fermer"
+  font: "default"
+  id: "close"
+  pivot: PIVOT_CENTER
+  inherit_alpha: true
+  enabled: false
+  outline {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  shadow {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+nodes {
+  position {
+    x: 480.0
+    y: 340.0
+  }
+  size {
+    x: 320.0
+    y: 38.0
+  }
+  type: TYPE_BOX
+  id: "opt_1_bg"
+  inherit_alpha: true
+  alpha: 0.75
+  size_mode: SIZE_MODE_MANUAL
+  enabled: false
+  color {
+    x: 0.2
+    y: 0.45
+    z: 0.5
+  }
+}
+nodes {
+  position {
+    x: 480.0
+    y: 340.0
+  }
+  size {
+    x: 320.0
+    y: 36.0
+  }
+  type: TYPE_TEXT
+  text: "Studio (3x3)"
+  font: "default"
+  id: "opt_1"
+  pivot: PIVOT_CENTER
+  inherit_alpha: true
+  enabled: false
+  outline {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  shadow {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+nodes {
+  position {
+    x: 480.0
+    y: 285.0
+  }
+  size {
+    x: 320.0
+    y: 38.0
+  }
+  type: TYPE_BOX
+  id: "opt_2_bg"
+  inherit_alpha: true
+  alpha: 0.75
+  size_mode: SIZE_MODE_MANUAL
+  enabled: false
+  color {
+    x: 0.45
+    y: 0.3
+    z: 0.55
+  }
+}
+nodes {
+  position {
+    x: 480.0
+    y: 285.0
+  }
+  size {
+    x: 320.0
+    y: 36.0
+  }
+  type: TYPE_TEXT
+  text: "Loft (5x5)"
+  font: "default"
+  id: "opt_2"
+  pivot: PIVOT_CENTER
+  inherit_alpha: true
+  enabled: false
+  outline {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  shadow {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT
+script: "/main/apartments.gui_script"

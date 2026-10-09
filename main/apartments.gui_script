@@ -1,0 +1,68 @@
+-- "Appartements" button bottom-left opens/closes a small popup panel
+-- listing the available pre-made room layouts. Picking one tells
+-- room_controller.script (on /room_controller) to switch the active room;
+-- it also clears whatever furniture was placed in the old room.
+
+local OPTIONS = {
+	{ id = "opt_1", bg_id = "opt_1_bg", key = "studio" },
+	{ id = "opt_2", bg_id = "opt_2_bg", key = "loft" },
+}
+local PANEL_NODE_IDS = {
+	"panel_bg", "panel_title", "close_bg", "close",
+	"opt_1", "opt_1_bg", "opt_2", "opt_2_bg",
+}
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	self.toggle = gui.get_node("toggle")
+	self.toggle_bg = gui.get_node("toggle_bg")
+	self.close = gui.get_node("close")
+	self.panel_nodes = {}
+	for _, node_id in ipairs(PANEL_NODE_IDS) do
+		table.insert(self.panel_nodes, gui.get_node(node_id))
+	end
+	self.options = {}
+	for i, opt in ipairs(OPTIONS) do
+		self.options[i] = { node = gui.get_node(opt.id), bg = gui.get_node(opt.bg_id), key = opt.key }
+	end
+	self.open = false
+end
+
+local function set_panel_open(self, open)
+	self.open = open
+	for _, node in ipairs(self.panel_nodes) do
+		gui.set_enabled(node, open)
+	end
+	msg.post("/controller#controller", "apt_open", { open = open })
+end
+
+function on_input(self, action_id, action)
+	if action_id ~= hash("touch") or not action.pressed then
+		return false
+	end
+
+	if gui.pick_node(self.toggle_bg, action.x, action.y) or gui.pick_node(self.toggle, action.x, action.y) then
+		set_panel_open(self, not self.open)
+		return true
+	end
+
+	if not self.open then
+		return false
+	end
+
+	if gui.pick_node(self.close, action.x, action.y) then
+		set_panel_open(self, false)
+		return true
+	end
+
+	for _, opt in ipairs(self.options) do
+		if gui.pick_node(opt.node, action.x, action.y) or gui.pick_node(opt.bg, action.x, action.y) then
+			msg.post("/room_controller#room_controller", "set_room", { key = opt.key })
+			set_panel_open(self, false)
+			return true
+		end
+	end
+
+	-- swallow any other tap that lands on the open panel
+	return true
+end

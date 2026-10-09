@@ -23,10 +23,12 @@ local ITEMS = {
 
 local PICK_RADIUS = 50
 
--- the "Catalogue" toggle button sits bottom-right; ignore taps there even
--- if a stray touch event reaches us before/without the GUI consuming it
-local TOGGLE_ZONE_X = 800.0
-local TOGGLE_ZONE_Y = 90.0
+-- the "Catalogue" (furniture) and "Appartements" (room) toggle buttons are
+-- both stacked in the bottom-right corner; ignore taps in that whole
+-- column even if a stray touch event reaches us before/without the GUI
+-- consuming it
+local UI_ZONE_X = 800.0
+local UI_ZONE_Y = 150.0
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
@@ -34,6 +36,7 @@ function init(self)
 	self.placed = {}        -- { {id=, anim=, url=, x=, y=}, ... }
 	self.dragging = nil     -- index into self.placed currently being dragged
 	self.catalog_open = false
+	self.apt_open = false
 	self.panning = false    -- true while dragging the camera around the room
 end
 
@@ -42,6 +45,15 @@ function on_message(self, message_id, message, sender)
 		self.armed = message.index
 	elseif message_id == hash("catalog_open") then
 		self.catalog_open = message.open
+	elseif message_id == hash("apt_open") then
+		self.apt_open = message.open
+	elseif message_id == hash("clear_furniture") then
+		for _, p in ipairs(self.placed) do
+			go.delete(p.url)
+		end
+		self.placed = {}
+		self.dragging = nil
+		self.armed = nil
 	end
 end
 
@@ -61,11 +73,11 @@ function on_input(self, action_id, action)
 		return false
 	end
 
-	if self.catalog_open and not self.dragging then
+	if (self.catalog_open or self.apt_open) and not self.dragging then
 		return false
 	end
 
-	if action.x >= TOGGLE_ZONE_X and action.y <= TOGGLE_ZONE_Y and not self.dragging then
+	if action.x >= UI_ZONE_X and action.y <= UI_ZONE_Y and not self.dragging then
 		return false
 	end
 
