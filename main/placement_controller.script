@@ -26,11 +26,12 @@ local ITEMS = {
 local PICK_RADIUS = 50
 local TAP_THRESHOLD = 8   -- max drag distance (px) still counted as a tap
 
--- the "Catalogue" (furniture) and "Appartements" (room) toggle buttons are
--- both stacked in the bottom-right corner; ignore taps there even if a
--- stray touch event reaches us before/without the GUI consuming it
+-- the "Catalogue" (furniture), "Appartements" (room) and "Perso"
+-- (character customization) toggle buttons are all stacked in the
+-- bottom-right corner; ignore taps there even if a stray touch event
+-- reaches us before/without the GUI consuming it
 local UI_ZONE_X = 800.0
-local UI_ZONE_Y = 150.0
+local UI_ZONE_Y = 190.0
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
@@ -42,6 +43,7 @@ function init(self)
 	self.press_y = 0
 	self.catalog_open = false
 	self.apt_open = false
+	self.customize_open = false
 	self.panning = false    -- true while dragging the camera around the room
 end
 
@@ -54,6 +56,8 @@ function on_message(self, message_id, message, sender)
 		self.catalog_open = message.open
 	elseif message_id == hash("apt_open") then
 		self.apt_open = message.open
+	elseif message_id == hash("customize_open") then
+		self.customize_open = message.open
 	elseif message_id == hash("clear_furniture") then
 		for _, p in ipairs(self.placed) do
 			go.delete(p.url)
@@ -86,7 +90,7 @@ function on_input(self, action_id, action)
 		return false
 	end
 
-	if (self.catalog_open or self.apt_open) and not self.dragging then
+	if (self.catalog_open or self.apt_open or self.customize_open) and not self.dragging then
 		return false
 	end
 

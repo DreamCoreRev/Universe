@@ -1,0 +1,546 @@
+fonts {
+  name: "default"
+  font: "/builtins/fonts/default.font"
+}
+nodes {
+  position {
+    x: 880.0
+    y: 160.0
+  }
+  size {
+    x: 140.0
+    y: 50.0
+  }
+  type: TYPE_BOX
+  id: "toggle_bg"
+  inherit_alpha: true
+  alpha: 0.6
+  size_mode: SIZE_MODE_MANUAL
+  enabled: true
+}
+nodes {
+  position {
+    x: 880.0
+    y: 160.0
+  }
+  size {
+    x: 140.0
+    y: 40.0
+  }
+  type: TYPE_TEXT
+  text: "Perso"
+  font: "default"
+  id: "toggle"
+  pivot: PIVOT_CENTER
+  inherit_alpha: true
+  enabled: true
+  outline {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  shadow {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+nodes {
+  position {
+    x: 480.0
+    y: 320.0
+  }
+  size {
+    x: 560.0
+    y: 340.0
+  }
+  type: TYPE_BOX
+  id: "panel_bg"
+  inherit_alpha: true
+  alpha: 0.9
+  size_mode: SIZE_MODE_MANUAL
+  enabled: false
+  color {
+    x: 0.08
+    y: 0.09
+    z: 0.14
+  }
+}
+nodes {
+  position {
+    x: 480.0
+    y: 455.0
+  }
+  size {
+    x: 300.0
+    y: 40.0
+  }
+  type: TYPE_TEXT
+  text: "Personnaliser"
+  font: "default"
+  id: "panel_title"
+  pivot: PIVOT_CENTER
+  inherit_alpha: true
+  enabled: false
+  outline {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  shadow {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+nodes {
+  position {
+    x: 710.0
+    y: 455.0
+  }
+  size {
+    x: 60.0
+    y: 36.0
+  }
+  type: TYPE_BOX
+  id: "close_bg"
+  inherit_alpha: true
+  alpha: 0.7
+  size_mode: SIZE_MODE_MANUAL
+  enabled: false
+  color {
+    x: 0.6
+    y: 0.2
+    z: 0.2
+  }
+}
+nodes {
+  position {
+    x: 710.0
+    y: 455.0
+  }
+  size {
+    x: 60.0
+    y: 30.0
+  }
+  type: TYPE_TEXT
+  text: "Fermer"
+  font: "default"
+  id: "close"
+  pivot: PIVOT_CENTER
+  inherit_alpha: true
+  enabled: false
+  outline {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  shadow {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+nodes {
+  position {
+    x: 250.0
+    y: 400.0
+  }
+  size {
+    x: 100.0
+    y: 30.0
+  }
+  type: TYPE_TEXT
+  text: "Tete"
+  font: "default"
+  id: "head_label"
+  pivot: PIVOT_CENTER
+  inherit_alpha: true
+  enabled: false
+  outline {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  shadow {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+nodes {
+  position {
+    x: 240.0
+    y: 380.0
+  }
+  size {
+    x: 50.0
+    y: 50.0
+  }
+  type: TYPE_BOX
+  id: "head_c1"
+  inherit_alpha: true
+  alpha: 1.0
+  size_mode: SIZE_MODE_MANUAL
+  enabled: false
+  color {
+    x: 0.9
+    y: 0.9
+    z: 0.9
+  }
+}
+nodes {
+  position {
+    x: 300.0
+    y: 380.0
+  }
+  size {
+    x: 50.0
+    y: 50.0
+  }
+  type: TYPE_BOX
+  id: "head_c2"
+  inherit_alpha: true
+  alpha: 1.0
+  size_mode: SIZE_MODE_MANUAL
+  enabled: false
+  color {
+    x: 0.85
+    y: 0.25
+    z: 0.25
+  }
+}
+nodes {
+  position {
+    x: 360.0
+    y: 380.0
+  }
+  size {
+    x: 50.0
+    y: 50.0
+  }
+  type: TYPE_BOX
+  id: "head_c3"
+  inherit_alpha: true
+  alpha: 1.0
+  size_mode: SIZE_MODE_MANUAL
+  enabled: false
+  color {
+    x: 0.9
+    y: 0.55
+    z: 0.2
+  }
+}
+nodes {
+  position {
+    x: 420.0
+    y: 380.0
+  }
+  size {
+    x: 50.0
+    y: 50.0
+  }
+  type: TYPE_BOX
+  id: "head_c4"
+  inherit_alpha: true
+  alpha: 1.0
+  size_mode: SIZE_MODE_MANUAL
+  enabled: false
+  color {
+    x: 0.9
+    y: 0.8
+    z: 0.25
+  }
+}
+nodes {
+  position {
+    x: 480.0
+    y: 380.0
+  }
+  size {
+    x: 50.0
+    y: 50.0
+  }
+  type: TYPE_BOX
+  id: "head_c5"
+  inherit_alpha: true
+  alpha: 1.0
+  size_mode: SIZE_MODE_MANUAL
+  enabled: false
+  color {
+    x: 0.3
+    y: 0.7
+    z: 0.35
+  }
+}
+nodes {
+  position {
+    x: 540.0
+    y: 380.0
+  }
+  size {
+    x: 50.0
+    y: 50.0
+  }
+  type: TYPE_BOX
+  id: "head_c6"
+  inherit_alpha: true
+  alpha: 1.0
+  size_mode: SIZE_MODE_MANUAL
+  enabled: false
+  color {
+    x: 0.25
+    y: 0.55
+    z: 0.85
+  }
+}
+nodes {
+  position {
+    x: 600.0
+    y: 380.0
+  }
+  size {
+    x: 50.0
+    y: 50.0
+  }
+  type: TYPE_BOX
+  id: "head_c7"
+  inherit_alpha: true
+  alpha: 1.0
+  size_mode: SIZE_MODE_MANUAL
+  enabled: false
+  color {
+    x: 0.55
+    y: 0.35
+    z: 0.75
+  }
+}
+nodes {
+  position {
+    x: 660.0
+    y: 380.0
+  }
+  size {
+    x: 50.0
+    y: 50.0
+  }
+  type: TYPE_BOX
+  id: "head_c8"
+  inherit_alpha: true
+  alpha: 1.0
+  size_mode: SIZE_MODE_MANUAL
+  enabled: false
+  color {
+    x: 0.85
+    y: 0.45
+    z: 0.65
+  }
+}
+nodes {
+  position {
+    x: 270.0
+    y: 280.0
+  }
+  size {
+    x: 140.0
+    y: 30.0
+  }
+  type: TYPE_TEXT
+  text: "Vetements"
+  font: "default"
+  id: "body_label"
+  pivot: PIVOT_CENTER
+  inherit_alpha: true
+  enabled: false
+  outline {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  shadow {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+nodes {
+  position {
+    x: 240.0
+    y: 260.0
+  }
+  size {
+    x: 50.0
+    y: 50.0
+  }
+  type: TYPE_BOX
+  id: "body_c1"
+  inherit_alpha: true
+  alpha: 1.0
+  size_mode: SIZE_MODE_MANUAL
+  enabled: false
+  color {
+    x: 0.9
+    y: 0.9
+    z: 0.9
+  }
+}
+nodes {
+  position {
+    x: 300.0
+    y: 260.0
+  }
+  size {
+    x: 50.0
+    y: 50.0
+  }
+  type: TYPE_BOX
+  id: "body_c2"
+  inherit_alpha: true
+  alpha: 1.0
+  size_mode: SIZE_MODE_MANUAL
+  enabled: false
+  color {
+    x: 0.85
+    y: 0.25
+    z: 0.25
+  }
+}
+nodes {
+  position {
+    x: 360.0
+    y: 260.0
+  }
+  size {
+    x: 50.0
+    y: 50.0
+  }
+  type: TYPE_BOX
+  id: "body_c3"
+  inherit_alpha: true
+  alpha: 1.0
+  size_mode: SIZE_MODE_MANUAL
+  enabled: false
+  color {
+    x: 0.9
+    y: 0.55
+    z: 0.2
+  }
+}
+nodes {
+  position {
+    x: 420.0
+    y: 260.0
+  }
+  size {
+    x: 50.0
+    y: 50.0
+  }
+  type: TYPE_BOX
+  id: "body_c4"
+  inherit_alpha: true
+  alpha: 1.0
+  size_mode: SIZE_MODE_MANUAL
+  enabled: false
+  color {
+    x: 0.9
+    y: 0.8
+    z: 0.25
+  }
+}
+nodes {
+  position {
+    x: 480.0
+    y: 260.0
+  }
+  size {
+    x: 50.0
+    y: 50.0
+  }
+  type: TYPE_BOX
+  id: "body_c5"
+  inherit_alpha: true
+  alpha: 1.0
+  size_mode: SIZE_MODE_MANUAL
+  enabled: false
+  color {
+    x: 0.3
+    y: 0.7
+    z: 0.35
+  }
+}
+nodes {
+  position {
+    x: 540.0
+    y: 260.0
+  }
+  size {
+    x: 50.0
+    y: 50.0
+  }
+  type: TYPE_BOX
+  id: "body_c6"
+  inherit_alpha: true
+  alpha: 1.0
+  size_mode: SIZE_MODE_MANUAL
+  enabled: false
+  color {
+    x: 0.25
+    y: 0.55
+    z: 0.85
+  }
+}
+nodes {
+  position {
+    x: 600.0
+    y: 260.0
+  }
+  size {
+    x: 50.0
+    y: 50.0
+  }
+  type: TYPE_BOX
+  id: "body_c7"
+  inherit_alpha: true
+  alpha: 1.0
+  size_mode: SIZE_MODE_MANUAL
+  enabled: false
+  color {
+    x: 0.55
+    y: 0.35
+    z: 0.75
+  }
+}
+nodes {
+  position {
+    x: 660.0
+    y: 260.0
+  }
+  size {
+    x: 50.0
+    y: 50.0
+  }
+  type: TYPE_BOX
+  id: "body_c8"
+  inherit_alpha: true
+  alpha: 1.0
+  size_mode: SIZE_MODE_MANUAL
+  enabled: false
+  color {
+    x: 0.85
+    y: 0.45
+    z: 0.65
+  }
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT
+script: "/main/customize.gui_script"

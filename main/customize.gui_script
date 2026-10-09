@@ -1,0 +1,94 @@
+-- "Perso" button bottom-right opens/closes the character customization
+-- panel: two rows of color swatches, one for the head tint, one for the
+-- clothes/body tint. Tapping a swatch sends the color straight to
+-- /character (set_head_color / set_body_color) and the mannequin
+-- recolors immediately -- no need to close the panel first.
+
+local PALETTE_IDS = { "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8" }
+local PALETTE_COLORS = {
+	vmath.vector4(0.90, 0.90, 0.90, 1),
+	vmath.vector4(0.85, 0.25, 0.25, 1),
+	vmath.vector4(0.90, 0.55, 0.20, 1),
+	vmath.vector4(0.90, 0.80, 0.25, 1),
+	vmath.vector4(0.30, 0.70, 0.35, 1),
+	vmath.vector4(0.25, 0.55, 0.85, 1),
+	vmath.vector4(0.55, 0.35, 0.75, 1),
+	vmath.vector4(0.85, 0.45, 0.65, 1),
+}
+
+local PANEL_CHROME_IDS = {
+	"panel_bg", "panel_title", "close_bg", "close",
+	"head_label", "body_label",
+}
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	self.toggle = gui.get_node("toggle")
+	self.toggle_bg = gui.get_node("toggle_bg")
+	self.close = gui.get_node("close")
+
+	self.panel_chrome = {}
+	for _, node_id in ipairs(PANEL_CHROME_IDS) do
+		table.insert(self.panel_chrome, gui.get_node(node_id))
+	end
+
+	self.head_swatches = {}
+	self.body_swatches = {}
+	for i, cid in ipairs(PALETTE_IDS) do
+		table.insert(self.head_swatches, { node = gui.get_node("head_" .. cid), color = PALETTE_COLORS[i] })
+		table.insert(self.body_swatches, { node = gui.get_node("body_" .. cid), color = PALETTE_COLORS[i] })
+	end
+
+	self.open = false
+end
+
+local function set_panel_open(self, open)
+	self.open = open
+	for _, node in ipairs(self.panel_chrome) do
+		gui.set_enabled(node, open)
+	end
+	for _, s in ipairs(self.head_swatches) do
+		gui.set_enabled(s.node, open)
+	end
+	for _, s in ipairs(self.body_swatches) do
+		gui.set_enabled(s.node, open)
+	end
+	msg.post("/controller#controller", "customize_open", { open = open })
+end
+
+function on_input(self, action_id, action)
+	if action_id ~= hash("touch") or not action.pressed then
+		return false
+	end
+
+	if gui.pick_node(self.toggle_bg, action.x, action.y) or gui.pick_node(self.toggle, action.x, action.y) then
+		set_panel_open(self, not self.open)
+		return true
+	end
+
+	if not self.open then
+		return false
+	end
+
+	if gui.pick_node(self.close, action.x, action.y) then
+		set_panel_open(self, false)
+		return true
+	end
+
+	for _, s in ipairs(self.head_swatches) do
+		if gui.pick_node(s.node, action.x, action.y) then
+			msg.post("/character", "set_head_color", { color = s.color })
+			return true
+		end
+	end
+
+	for _, s in ipairs(self.body_swatches) do
+		if gui.pick_node(s.node, action.x, action.y) then
+			msg.post("/character", "set_body_color", { color = s.color })
+			return true
+		end
+	end
+
+	-- swallow any other tap that lands on the open panel
+	return true
+end

@@ -8,6 +8,60 @@ images {
   image: "/main/images/south.png"
 }
 images {
+  image: "/main/images/sit_s.png"
+}
+images {
+  image: "/main/images/sit_sw.png"
+}
+images {
+  image: "/main/images/head_north.png"
+}
+images {
+  image: "/main/images/body_north.png"
+}
+images {
+  image: "/main/images/head_east.png"
+}
+images {
+  image: "/main/images/body_east.png"
+}
+images {
+  image: "/main/images/head_west.png"
+}
+images {
+  image: "/main/images/body_west.png"
+}
+images {
+  image: "/main/images/head_northeast.png"
+}
+images {
+  image: "/main/images/body_northeast.png"
+}
+images {
+  image: "/main/images/head_northwest.png"
+}
+images {
+  image: "/main/images/body_northwest.png"
+}
+images {
+  image: "/main/images/head_south.png"
+}
+images {
+  image: "/main/images/body_south.png"
+}
+images {
+  image: "/main/images/head_southeast.png"
+}
+images {
+  image: "/main/images/body_southeast.png"
+}
+images {
+  image: "/main/images/head_southwest.png"
+}
+images {
+  image: "/main/images/body_southwest.png"
+}
+images {
   image: "/main/images/north.png"
 }
 images {

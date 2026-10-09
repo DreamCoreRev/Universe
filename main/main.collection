@@ -92,6 +92,22 @@ embedded_instances {
   "  }\n"
   "}\n"
   "embedded_components {\n"
+  "  id: \"sprite_head\"\n"
+  "  type: \"sprite\"\n"
+  "  data: \"default_animation: \\\"head_south\\\"\\n"
+  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
+  "textures {\\n"
+  "  sampler: \\\"texture_sampler\\\"\\n"
+  "  texture: \\\"/main/images.atlas\\\"\\n"
+  "}\\n"
+  "\"\n"
+  "  position {\n"
+  "    x: -30.0\n"
+  "    y: -10.0\n"
+  "    z: 0.21\n"
+  "  }\n"
+  "}\n"
+  "embedded_components {\n"
   "  id: \"collisionobject\"\n"
   "  type: \"collisionobject\"\n"
   "  data: \"type: COLLISION_OBJECT_TYPE_KINEMATIC\\n"
@@ -1600,6 +1616,18 @@ embedded_instances {
   data: "components {\n"
   "  id: \"chat\"\n"
   "  component: \"/main/chat.gui\"\n"
+  "}\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
+  }
+}
+embedded_instances {
+  id: "customize"
+  data: "components {\n"
+  "  id: \"customize\"\n"
+  "  component: \"/main/customize.gui\"\n"
   "}\n"
   ""
   position {
