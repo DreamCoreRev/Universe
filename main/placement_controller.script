@@ -5,8 +5,10 @@
 --
 -- Tap priority: tapping ON an existing piece of furniture always grabs it
 -- for dragging, even if a catalog item is armed. Tapping empty floor while
--- an item is armed places a new copy there. Tapping empty floor with
--- nothing armed does nothing.
+-- an item is armed places a new copy there. Tapping and holding empty
+-- floor with nothing armed instead pans the camera around the room (see
+-- camera.script) so you can see furniture that pokes out past the edges;
+-- releasing snaps the view back to the room's center.
 
 local ITEMS = {
 	{ id = "chair",    anim = "chair_SW" },
@@ -32,6 +34,7 @@ function init(self)
 	self.placed = {}        -- { {id=, anim=, url=, x=, y=}, ... }
 	self.dragging = nil     -- index into self.placed currently being dragged
 	self.catalog_open = false
+	self.panning = false    -- true while dragging the camera around the room
 end
 
 function on_message(self, message_id, message, sender)
@@ -78,8 +81,11 @@ function on_input(self, action_id, action)
 			msg.post(url, "set_item", { item_id = item.id, anim = item.anim })
 			table.insert(self.placed, { id = item.id, anim = item.anim, url = url, x = action.x, y = action.y })
 			return true
+		else
+			self.panning = true
+			msg.post("/camera#camera_script", "pan_start", { x = action.x, y = action.y })
+			return true
 		end
-		return false
 	end
 
 	if self.dragging then
@@ -88,6 +94,15 @@ function on_input(self, action_id, action)
 		go.set_position(vmath.vector3(action.x, action.y, 0.15), p.url)
 		if action.released then
 			self.dragging = nil
+		end
+		return true
+	end
+
+	if self.panning then
+		msg.post("/camera#camera_script", "pan_move", { x = action.x, y = action.y })
+		if action.released then
+			self.panning = false
+			msg.post("/camera#camera_script", "pan_end")
 		end
 		return true
 	end

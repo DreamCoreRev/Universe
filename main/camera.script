@@ -1,0 +1,52 @@
+-- Habbo-style look-around camera. While the player holds a drag on empty
+-- floor (see placement_controller.script), the room content follows the
+-- drag so you can see furniture that pokes out past the room's edges.
+-- Releasing smoothly glides the camera back to the room's center.
+
+local CENTER = vmath.vector3(480, 300, 0)
+local MAX_PAN = 220        -- how far you can drag the view, in pixels
+local RETURN_SPEED = 8     -- higher = snaps back to center faster
+
+function init(self)
+	msg.post("#camera", "acquire_camera_focus")
+	self.pos = vmath.vector3(CENTER.x, CENTER.y, 0)
+	self.target = vmath.vector3(CENTER.x, CENTER.y, 0)
+	self.dragging = false
+	go.set_position(self.pos)
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("pan_start") then
+		self.dragging = true
+		self.press_x = message.x
+		self.press_y = message.y
+		self.start_pos = self.pos
+	elseif message_id == hash("pan_move") then
+		if self.dragging then
+			-- the room content should follow the finger/cursor, so the
+			-- camera itself moves the opposite way
+			local dx = message.x - self.press_x
+			local dy = message.y - self.press_y
+			local len = math.sqrt(dx * dx + dy * dy)
+			if len > MAX_PAN then
+				local scale = MAX_PAN / len
+				dx = dx * scale
+				dy = dy * scale
+			end
+			self.target = vmath.vector3(self.start_pos.x - dx, self.start_pos.y - dy, 0)
+		end
+	elseif message_id == hash("pan_end") then
+		self.dragging = false
+		self.target = vmath.vector3(CENTER.x, CENTER.y, 0)
+	end
+end
+
+function update(self, dt)
+	if self.dragging then
+		self.pos = self.target
+	else
+		local t = math.min(dt * RETURN_SPEED, 1)
+		self.pos = vmath.lerp(t, self.pos, self.target)
+	end
+	go.set_position(self.pos)
+end
