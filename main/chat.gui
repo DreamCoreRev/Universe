@@ -1,0 +1,112 @@
+fonts {
+  name: "default"
+  font: "/builtins/fonts/default.font"
+}
+nodes {
+  position {
+    x: 480.0
+    y: 30.0
+  }
+  size {
+    x: 760.0
+    y: 40.0
+  }
+  type: TYPE_BOX
+  id: "input_bg"
+  inherit_alpha: true
+  alpha: 0.85
+  size_mode: SIZE_MODE_MANUAL
+  enabled: false
+  color {
+    x: 0.08
+    y: 0.09
+    z: 0.14
+  }
+}
+nodes {
+  position {
+    x: 120.0
+    y: 30.0
+  }
+  size {
+    x: 720.0
+    y: 32.0
+  }
+  type: TYPE_TEXT
+  text: ""
+  font: "default"
+  id: "input_text"
+  pivot: PIVOT_W
+  inherit_alpha: true
+  enabled: false
+  outline {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  shadow {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+nodes {
+  position {
+    x: 480.0
+    y: 420.0
+  }
+  size {
+    x: 240.0
+    y: 56.0
+  }
+  type: TYPE_BOX
+  id: "bubble_bg"
+  inherit_alpha: true
+  alpha: 0.9
+  size_mode: SIZE_MODE_MANUAL
+  enabled: false
+  color {
+    x: 0.95
+    y: 0.95
+    z: 0.92
+  }
+}
+nodes {
+  position {
+    x: 480.0
+    y: 420.0
+  }
+  size {
+    x: 220.0
+    y: 44.0
+  }
+  type: TYPE_TEXT
+  text: ""
+  font: "default"
+  id: "bubble_text"
+  pivot: PIVOT_CENTER
+  inherit_alpha: true
+  enabled: false
+  color {
+    x: 0.1
+    y: 0.1
+    z: 0.12
+  }
+  outline {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  shadow {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT
+script: "/main/chat.gui_script"

@@ -38,3 +38,19 @@ touch_trigger {
   input: TOUCH_MULTI
   action: "touch"
 }
+text_trigger {
+  input: TEXT
+  action: "text"
+}
+key_trigger {
+  input: KEY_ENTER
+  action: "chat_enter"
+}
+key_trigger {
+  input: KEY_BACKSPACE
+  action: "chat_backspace"
+}
+key_trigger {
+  input: KEY_ESC
+  action: "chat_escape"
+}

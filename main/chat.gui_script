@@ -1,0 +1,107 @@
+-- Habbo-style chat: press Enter to start typing, type with the keyboard,
+-- Enter again sends the message as a speech bubble above the character
+-- (Escape cancels). There's no other player to see it yet -- it's just the
+-- interface, ready for when online play is added later.
+
+local MAX_LEN = 80
+local BUBBLE_DURATION = 4.0   -- seconds the speech bubble stays visible
+local BUBBLE_OFFSET = vmath.vector3(0, 90, 0)  -- above the character's feet
+local SCREEN_CENTER = vmath.vector3(480, 320, 0)
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	self.input_bg = gui.get_node("input_bg")
+	self.input_text = gui.get_node("input_text")
+	self.bubble_bg = gui.get_node("bubble_bg")
+	self.bubble_text = gui.get_node("bubble_text")
+
+	self.typing = false
+	self.buffer = ""
+	self.bubble_timer = 0
+
+	-- gui_script can't call go.* directly, so character.script and
+	-- camera.script post their live position here every frame instead
+	self.char_pos = vmath.vector3(480, 300, 0)
+	self.cam_pos = vmath.vector3(480, 300, 0)
+end
+
+local function refresh_input(self)
+	gui.set_text(self.input_text, self.buffer .. "_")
+end
+
+local function set_typing(self, active)
+	self.typing = active
+	gui.set_enabled(self.input_bg, active)
+	gui.set_enabled(self.input_text, active)
+	if active then
+		self.buffer = ""
+		refresh_input(self)
+	end
+	msg.post("/character", "chat_active", { active = active })
+end
+
+local function send_message(self)
+	local text = self.buffer
+	set_typing(self, false)
+	if text == "" then
+		return
+	end
+	gui.set_text(self.bubble_text, text)
+	gui.set_enabled(self.bubble_bg, true)
+	gui.set_enabled(self.bubble_text, true)
+	self.bubble_timer = BUBBLE_DURATION
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("character_moved") then
+		self.char_pos = message.pos
+	elseif message_id == hash("camera_moved") then
+		self.cam_pos = message.pos
+	end
+end
+
+function on_input(self, action_id, action)
+	if action_id == hash("chat_enter") and action.pressed then
+		if self.typing then
+			send_message(self)
+		else
+			set_typing(self, true)
+		end
+		return true
+	elseif action_id == hash("chat_escape") and action.pressed then
+		if self.typing then
+			set_typing(self, false)
+			return true
+		end
+	elseif action_id == hash("chat_backspace") and action.pressed then
+		if self.typing then
+			self.buffer = self.buffer:sub(1, -2)
+			refresh_input(self)
+			return true
+		end
+	elseif action_id == hash("text") then
+		if self.typing and action.text and #self.buffer < MAX_LEN then
+			self.buffer = self.buffer .. action.text
+			refresh_input(self)
+			return true
+		end
+	end
+	return false
+end
+
+function update(self, dt)
+	-- keep the bubble tracking the character's screen position, accounting
+	-- for the camera (which can be panned -- see camera.script); the
+	-- positions themselves arrive via on_message (see note in init)
+	local screen_pos = self.char_pos - self.cam_pos + SCREEN_CENTER + BUBBLE_OFFSET
+	gui.set_position(self.bubble_bg, screen_pos)
+	gui.set_position(self.bubble_text, screen_pos)
+
+	if self.bubble_timer > 0 then
+		self.bubble_timer = self.bubble_timer - dt
+		if self.bubble_timer <= 0 then
+			gui.set_enabled(self.bubble_bg, false)
+			gui.set_enabled(self.bubble_text, false)
+		end
+	end
+end

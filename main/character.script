@@ -48,6 +48,9 @@ function init(self)
 	-- each in the range -1..1. Zero when nothing is being dragged.
 	self.touch_dx = 0
 	self.touch_dy = 0
+	-- true while the chat input (chat.gui_script) is open, so WASD/arrow
+	-- keys type into the chat box instead of moving the character
+	self.chat_active = false
 end
 
 function final(self)
@@ -55,6 +58,9 @@ function final(self)
 end
 
 function on_input(self, action_id, action)
+	if self.chat_active then
+		return false
+	end
 	if action_id == hash("up") then
 		if action.pressed then self.input.up = true end
 		if action.released then self.input.up = false end
@@ -87,6 +93,14 @@ function on_message(self, message_id, message, sender)
 		-- is being dragged; (0, 0) when released
 		self.touch_dx = message.dx
 		self.touch_dy = message.dy
+	elseif message_id == hash("chat_active") then
+		-- sent by chat.gui_script when the chat input opens/closes
+		self.chat_active = message.active
+		if self.chat_active then
+			self.input = { up = false, down = false, left = false, right = false }
+			self.touch_dx = 0
+			self.touch_dy = 0
+		end
 	end
 end
 
@@ -97,6 +111,9 @@ function update(self, dt)
 
 	local dx = (self.input.right and 1 or 0) - (self.input.left and 1 or 0) + self.touch_dx
 	local dy = (self.input.up and 1 or 0) - (self.input.down and 1 or 0) + self.touch_dy
+	if self.chat_active then
+		dx, dy = 0, 0
+	end
 	local moving = (dx ~= 0 or dy ~= 0)
 
 	if moving then
@@ -113,4 +130,9 @@ function update(self, dt)
 		sprite.play_flipbook("#sprite", target)
 		self.current_anim = target
 	end
+
+	-- gui_script files can't call go.* functions directly, so the chat
+	-- speech bubble (chat.gui_script) needs this posted to it each frame
+	-- to know where the character is on screen
+	msg.post("/chat#chat", "character_moved", { pos = go.get_position() })
 end

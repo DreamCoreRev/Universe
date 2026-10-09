@@ -1596,18 +1596,6 @@ embedded_instances {
   }
 }
 embedded_instances {
-  id: "chat"
-  data: "components {\n"
-  "  id: \"chat\"\n"
-  "  component: \"/main/chat.gui\"\n"
-  "}\n"
-  ""
-  position {
-    x: 0.0
-    y: 0.0
-  }
-}
-embedded_instances {
   id: "hud"
   data: "components {\n"
   "  id: \"hud\"\n"

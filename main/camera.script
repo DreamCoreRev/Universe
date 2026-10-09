@@ -49,4 +49,7 @@ function update(self, dt)
 		self.pos = vmath.lerp(t, self.pos, self.target)
 	end
 	go.set_position(self.pos)
+	-- gui_script files can't call go.* functions directly, so the chat
+	-- speech bubble (chat.gui_script) needs this posted to it each frame
+	msg.post("/chat#chat", "camera_moved", { pos = self.pos })
 end
