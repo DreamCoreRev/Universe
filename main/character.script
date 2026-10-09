@@ -51,6 +51,9 @@ function init(self)
 	-- true while the chat input (chat.gui_script) is open, so WASD/arrow
 	-- keys type into the chat box instead of moving the character
 	self.chat_active = false
+	-- true while sitting on a chair (placement_controller.script sends
+	-- "sit_at" on a tap, see find_at/on_input there)
+	self.seated = false
 end
 
 function final(self)
@@ -60,6 +63,12 @@ end
 function on_input(self, action_id, action)
 	if self.chat_active then
 		return false
+	end
+	if self.seated and action.pressed and (action_id == hash("up") or action_id == hash("down")
+		or action_id == hash("left") or action_id == hash("right")) then
+		-- any movement key stands the character back up; let it fall
+		-- through so this same key press also starts moving right away
+		self.seated = false
 	end
 	if action_id == hash("up") then
 		if action.pressed then self.input.up = true end
@@ -82,7 +91,7 @@ function on_message(self, message_id, message, sender)
 		-- contact point reported this frame, push the character back out of
 		-- the obstacle along the contact normal, without double-correcting
 		-- for contacts already resolved this frame.
-		if message.distance > 0 then
+		if not self.seated and message.distance > 0 then
 			local proj = vmath.project(self.correction, message.normal * message.distance)
 			local comp = (message.distance - proj) * message.normal
 			go.set_position(go.get_position() + comp)
@@ -93,6 +102,12 @@ function on_message(self, message_id, message, sender)
 		-- is being dragged; (0, 0) when released
 		self.touch_dx = message.dx
 		self.touch_dy = message.dy
+	elseif message_id == hash("sit_at") then
+		self.seated = true
+		self.touch_dx, self.touch_dy = 0, 0
+		self.input = { up = false, down = false, left = false, right = false }
+		self.facing = "s"
+		go.set_position(vmath.vector3(message.x, message.y + 10, go.get_position().z))
 	elseif message_id == hash("chat_active") then
 		-- sent by chat.gui_script when the chat input opens/closes
 		self.chat_active = message.active
@@ -111,7 +126,7 @@ function update(self, dt)
 
 	local dx = (self.input.right and 1 or 0) - (self.input.left and 1 or 0) + self.touch_dx
 	local dy = (self.input.up and 1 or 0) - (self.input.down and 1 or 0) + self.touch_dy
-	if self.chat_active then
+	if self.chat_active or self.seated then
 		dx, dy = 0, 0
 	end
 	local moving = (dx ~= 0 or dy ~= 0)

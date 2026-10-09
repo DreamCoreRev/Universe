@@ -747,6 +747,56 @@ nodes {
     w: 1.0
   }
 }
+nodes {
+  position {
+    x: 480.0
+    y: 190.0
+  }
+  size {
+    x: 300.0
+    y: 36.0
+  }
+  type: TYPE_BOX
+  id: "delete_mode_bg"
+  inherit_alpha: true
+  alpha: 0.8
+  size_mode: SIZE_MODE_MANUAL
+  enabled: false
+  color {
+    x: 0.55
+    y: 0.18
+    z: 0.18
+  }
+}
+nodes {
+  position {
+    x: 480.0
+    y: 190.0
+  }
+  size {
+    x: 300.0
+    y: 32.0
+  }
+  type: TYPE_TEXT
+  text: "Supprimer un mobi"
+  font: "default"
+  id: "delete_mode"
+  pivot: PIVOT_CENTER
+  inherit_alpha: true
+  enabled: false
+  outline {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  shadow {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT
 script: "/main/catalog.gui_script"
